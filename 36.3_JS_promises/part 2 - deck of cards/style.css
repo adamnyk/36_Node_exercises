@@ -1,0 +1,14 @@
+body {
+    text-align: center;
+    background-color: limegreen;
+}
+
+button {
+    display: none;
+    margin: 0 auto;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}
