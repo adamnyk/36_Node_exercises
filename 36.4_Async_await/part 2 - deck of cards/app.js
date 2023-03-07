@@ -2,10 +2,10 @@
 let baseURL = "https://deckofcardsapi.com/api/deck";
 
 async function drawOne() {
-	let { data } = await axios.get(`${baseURL}/new/draw/`)
-	let value = data.cards[0]["value"];
-	let suit = data.cards[0]["suit"];
+	let {data} = await axios.get(`${baseURL}/new/draw/`)
+	let {suit, value} = data.cards[0];
 	console.log(`${value} of ${suit}`);
+	console.log('2. ============')
 }
 
 drawOne()
@@ -14,17 +14,17 @@ drawOne()
 
 async function drawTwo() {
 	try {
-		let res = await axios.get(`${baseURL}/new/draw/`)
-		console.log('2. ============')
-		let firstCard = res.data.cards[0];
-		let deck_id = res.data.deck_id;
-		let res2 = await axios.get(`${baseURL}/${deck_id}/draw/`)
-		let secondCard = res2.data.cards[0];
-		console.log(`${firstCard['value']} of ${firstCard['suit']}`)
-		console.log(`${secondCard['value']} of ${secondCard['suit']}`)
+		let firstCardData = await axios.get(`${baseURL}/new/draw/`)
+		let deck_id = firstCardData.data.deck_id;
+		
+		let secondCardData = await axios.get(`${baseURL}/${deck_id}/draw/`)
+
+		for (let card of [firstCardData, secondCardData]) {
+			let { value, suit } = card.data.cards[0]
+			console.log(value, 'of', suit)
+		}
 	}
 	catch (e) {
-		console.log('2. ============')
 		console.log('ERROR!:', e)
 	}
 }
