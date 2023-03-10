@@ -10,7 +10,6 @@ function generateText(text) {
 	console.log(markov.makeText());
 }
 
-// make text. file > return text
 function generateFileText(path) {
 	fs.readFile(path, "utf8", (err, data) => {
 		if (err) {
@@ -32,14 +31,15 @@ async function generateURLText(url) {
     }
 }
 
-if (process.argv[2] === "file") {
-    let path = process.argv[3]
-    generateFileText(path)
+const type = process.argv[2]
+const path = process.argv[3]
+
+function makeText(type, path) {
+    if (type === 'file') return generateFileText(path)
+    else if (type === 'url') return generateURLText(path)
 }
-if (process.argv[2] === "url") {
-    let url = process.argv[3]
-    generateURLText(url)
-}
+
+makeText(type, path)    
 
 /////////////////////////////////////////////////
 // Debug code
